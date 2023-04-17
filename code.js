@@ -240,7 +240,7 @@ $(function () {
         fromJsonLines.unshift(`${makeBlank(count * 2)}if (json[${jsonKey}] != null${typeCheck}) {\n${makeBlank(count * 2)}final v = json[${jsonKey}];\n${makeBlank(count * 2)}final arr0 = ${genericStringGenerator(innerClass, total).slice(4)}[];`);
         fromJsonLines.push(`${makeBlank(count * 2)}${makeBlank(count)}${legalKey} = arr0;\n    }\n`);
         toJsonLines.unshift(`    if (${legalKey} != null) {\n      final v = ${legalKey};\n      final arr0 = [];`);
-        toJsonLines.push(`      data[${jsonKey}] = arr0;\n    }\n`);
+        toJsonLines.push(`      data[${jsonKey}] = arr0;\n    }else{\r\n${makeBlank(count * 2)}${makeBlank(count * 2)}${makeBlank(count * 2)}${legalKey} = []; \r\n${makeBlank(count * 2)}${makeBlank(count * 2)}}\n`);
 
         let fromJsonLinesJoined = fromJsonLines.join('\r\n');
         let toJsonLinesJoined = toJsonLines.join('\r\n');
@@ -353,7 +353,7 @@ $(function () {
                   element = element.toString();
                 }
                 if (typeof element === 'string') {
-                  toType = `json[${jsonKey}]?.toString()`;
+                  toType = `json[${jsonKey}]?.toString() ?? ""`;
                   type = 'String';
                 }
                 else if (typeof element === 'number') {
